@@ -3,7 +3,9 @@
 @section('content')
 <h1>タスク一覧</h1>
 
-
+@if(!$phrase_exists)
+<a href="{{route('create')}}">フレーズを登録しよう！</a>
+@endif
 @foreach($phrases as $phrase)
     <div>
         <th scope="row" style="display:inline-flex">{{$phrase['japanese']}}</th>

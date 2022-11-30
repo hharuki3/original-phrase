@@ -12,6 +12,7 @@ use App\Models\PhraseCategory;
 use App\Models\UserGroup;
 use DB;
 
+
 class HomeController extends Controller
 {
     /**
@@ -36,8 +37,11 @@ class HomeController extends Controller
             ->where('user_id', '=', \Auth::id())
             ->orderBy('updated_at', 'DESC')
             ->get();
-            // dd($phrases);
-        return view('home', compact('phrases'));
+        $phrase_exists = Phrase::where('user_id', '=', \Auth::id())
+            ->whereNull('deleted_at')
+            ->exists();
+
+        return view('home', compact('phrases', 'phrase_exists'));
     }
 
     public function create()
@@ -103,7 +107,6 @@ class HomeController extends Controller
         return view('edit', compact('phrases', 'edit_phrase', 'include_categories', 'categories'));
     }
 
-
     public function update(Request $request)
     {
         $posts = $request->all();
@@ -115,8 +118,11 @@ class HomeController extends Controller
             foreach($posts['categories'] as $category){
                 PhraseCategory::insert(['phrase_id' => $posts['phrase_id'], 'category_id' => $category]);
             }
-            $category_exists = Category::where('user_id', '=', \Auth::id())->where('name', '=', $posts['new_category'])
+            $category_exists = Category::where('user_id', '=', \Auth::id())
+                ->where('name', '=', $posts['new_category'])
+                ->whereNull('deleted_at')
                 ->exists();
+                // dd($category_exists);
             //emptyは0も空扱いになるため、厳密に書くのであれば「|| $posts['new_category']===0」も追加
             if(!empty($posts['new_category'] && !$category_exists)){
                 $category_id = Category::insertGetId(['name' => $posts['new_category'], 'user_id' => \Auth::id()]);
@@ -155,5 +161,15 @@ class HomeController extends Controller
         return redirect(route('home'));
     }
 
+    public function category_destroy(Request $request)
+    {
+        $posts = $request->all();
+        // dd($posts);
+        // Category::where('id', '=', $posts['category_id'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
+        foreach($posts['categories'] as $category){
+            Category::where('id', $posts['categories'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
+        }
+        return back();
+    }
 
 }

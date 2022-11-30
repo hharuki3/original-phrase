@@ -26,6 +26,7 @@ Route::get('/edit/{id}', [HomeController::class, 'edit'])->name('edit');
 Route::post('/update', [HomeController::class, 'update'])->name('update');
 Route::get('/detail/{id}', [HomeController::class, 'detail'])->name('detail');
 Route::post('/destroy', [HomeController::class, 'destroy'])->name('destroy');
+Route::post('/category_destroy', [HomeController::class, 'category_destroy'])->name('category_destroy');
 
 
 Auth::routes();
