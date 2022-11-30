@@ -95,10 +95,13 @@ class HomeController extends Controller
             ->where('phrases.id', '=', $id)
             ->whereNull('phrases.deleted_at')
             ->get(); 
+            // dd($edit_phrase);
         $include_categories = [];
         foreach($edit_phrase as $phrase){
             array_push($include_categories, $phrase['category_id']);
         }
+        
+        // dd($include_categories);
         $categories = Category::select('categories.*')->where('user_id', '=', \Auth::id())
         ->whereNull('deleted_at')
         ->orderBy('updated_at', 'DESC')
@@ -106,6 +109,7 @@ class HomeController extends Controller
         // dd($phrases);
         return view('edit', compact('phrases', 'edit_phrase', 'include_categories', 'categories'));
     }
+
 
     public function update(Request $request)
     {
@@ -115,8 +119,11 @@ class HomeController extends Controller
             Phrase::where('id', '=', $posts['phrase_id'])
                 ->update(['japanese' => $posts['japanese'], 'phrase' => $posts['phrase'], 'memo' => $posts['memo']]);
             PhraseCategory::where('phrase_id', '=', $posts['phrase_id'])->delete();
-            foreach($posts['categories'] as $category){
-                PhraseCategory::insert(['phrase_id' => $posts['phrase_id'], 'category_id' => $category]);
+
+            if($posts['categories']){
+                foreach($posts['categories'] as $category){
+                    PhraseCategory::insert(['phrase_id' => $posts['phrase_id'], 'category_id' => $category]);
+                }
             }
             $category_exists = Category::where('user_id', '=', \Auth::id())
                 ->where('name', '=', $posts['new_category'])
@@ -160,15 +167,13 @@ class HomeController extends Controller
         Phrase::where('id', $posts['phrase_id'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
         return redirect(route('home'));
     }
-
+    
     public function category_destroy(Request $request)
     {
         $posts = $request->all();
         // dd($posts);
         // Category::where('id', '=', $posts['category_id'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
-        foreach($posts['categories'] as $category){
-            Category::where('id', $posts['categories'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
-        }
+        Category::where('id', $posts['category_id'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
         return back();
     }
 

@@ -20,17 +20,18 @@
                 <div>
                     <input type="text" name="new_category">
                 </div>
+                <input type="hidden" name="categories">
                 @foreach($categories as $category)
-                <div>
+                <div>   
                     <input type="checkbox" name="categories[]" id="{{$category['id']}}" value="{{$category['id']}}"
-                    {{in_array($category['id'], $include_categories) ? 'checked' : ''}}>
+                    {{in_array($category['id'], $include_categories) ? 'checked' : ''}} >
                     <label for="{{$category['id']}}">{{$category['name']}}</label>
                     <!-- <input type="submit" name="categories[]" value="{{$category['id']}}" form="parent"> -->
-                    <button  name="categories[]" value="{{$category['id']}}" form="parent">削除</button>
+                    <button  name="category_id" value="{{$category['id']}}" form="parent">削除</button>
                 </div>
                 @endforeach
             </div>
-
+            
             <div>
                 <div class="form-group">
                     フレーズ
