@@ -27,7 +27,9 @@ Route::post('/update', [HomeController::class, 'update'])->name('update');
 Route::get('/detail/{id}', [HomeController::class, 'detail'])->name('detail');
 Route::post('/destroy', [HomeController::class, 'destroy'])->name('destroy');
 Route::post('/category_destroy', [HomeController::class, 'category_destroy'])->name('category_destroy');
-
+Route::get('/quiz', [HomeController::class, 'quiz'])->name('quiz');
+Route::get('/category', [HomeController::class, 'category'])->name('category');
+Route::get('/group', [HomeController::class, 'group'])->name('group');
 
 Auth::routes();
 

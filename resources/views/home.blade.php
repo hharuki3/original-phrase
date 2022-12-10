@@ -1,7 +1,36 @@
 @extends('layouts.app')
 
+@section('javascript')
+<script src="/js/confirm.js"></script>
+@endsection
+
+
+@section('name')
+    ホーム
+@endsection
+@section('item')
+<div class="">
+    <div>
+        <a href="{{route('category')}}" class="btn btn-light">
+            <img width="30" src="{{asset('img/group.png')}}" alt="">
+            <span>フレーズ一覧</span>
+        </a>
+    </div>
+    <div>
+        <a href="{{route('quiz')}}" class="btn btn-light">
+            <img width="30" src="{{asset('img/group.png')}}" alt="">
+            <span>復讐テスト</span>
+        </a>
+    </div>
+    <div>
+        <a href="{{route('group')}}" class="btn btn-light">
+            <img width="30" src="{{asset('img/group.png')}}" alt="">
+            <span>グループ</span>
+        </a>
+    </div>
+</div>
+@endsection
 @section('content')
-<h1>タスク一覧</h1>
 
 @if(!$phrase_exists)
 <a href="{{route('create')}}">フレーズを登録しよう！</a>
@@ -12,13 +41,13 @@
     </div>
         <th scope="row" style="display:inline-flex">{{$phrase['phrase']}}</th>
 
-    <a href="detail/{{$phrase['id']}}">詳細</a>
-    <a href="edit/{{$phrase['id']}}">編集</a>
+    <a href="detail/{{$phrase['id']}}" class="btn btn-light">詳細</a>
+    <a href="edit/{{$phrase['id']}}" class="btn btn-light">編集</a>
     <div style="display:inline-flex">
-        <form action="{{route('destroy')}}" method="post">
+        <form action="{{route('destroy')}}" method="post" id="delete-form">
             @csrf
             <input type="hidden" name="phrase_id" value="{{ $phrase['id'] }}" >
-            <input type="submit" value="削除">
+            <button type="submit" class="btn btn-light" onclick="deleteHandle(event);">削除</button>
         </form>
     </div>
 @endforeach

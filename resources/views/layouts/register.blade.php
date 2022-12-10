@@ -78,28 +78,7 @@
 
         
         <main class="py-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            @yield('name')
-                        </div>
-                        <div class="card-body">
-                            @yield('item')
-                        </div>
-                    </div>
-                </div>
-                
-
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body">
-                            @yield('content') 
-                            @yield('javascript')
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @yield('content') 
         </main>
         
     </div>

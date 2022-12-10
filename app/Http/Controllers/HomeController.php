@@ -32,26 +32,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $phrases = Phrase::select('phrases.*')
-            ->whereNull('deleted_at')
-            ->where('user_id', '=', \Auth::id())
-            ->orderBy('updated_at', 'DESC')
-            ->get();
-        $phrase_exists = Phrase::where('user_id', '=', \Auth::id())
-            ->whereNull('deleted_at')
-            ->exists();
-
-        return view('home', compact('phrases', 'phrase_exists'));
+        return view('home');
     }
 
     public function create()
     {
-        $categories = Category::where('user_id', '=', \Auth::id())
-            ->whereNull('deleted_at')
-            ->orderBy('updated_at', 'DESC')
-            ->get();
-            // dd($categories);
-        return view('create', compact('categories'));
+        return view('create');
     }
 
 
@@ -62,7 +48,9 @@ class HomeController extends Controller
         DB::transaction(function() use($posts){
             $phrase_id = Phrase::insertGetId(['japanese' => $posts['japanese'], 'phrase' => $posts['phrase'], 
             'memo' => $posts['memo'], 'user_id' => \Auth::id()]);
-            $category_exists = Category::where('user_id', '=', \Auth::id())->where('name', '=', $posts['new_category'])
+            $category_exists = Category::where('user_id', '=', \Auth::id())
+                ->where('name', '=', $posts['new_category'])
+                ->whereNull('deleted_at')
                 ->exists();
             //emptyは0も空扱いになるため、厳密に書くのであれば「|| $posts['new_category']===0」も追加
             if(!empty($posts['new_category'] && !$category_exists)){
@@ -83,11 +71,7 @@ class HomeController extends Controller
     public function edit($id)
     {
         // dd($id);
-        $phrases = Phrase::select('phrases.*')
-            ->where('user_id', '=', \Auth::id())
-            ->whereNull('deleted_at')
-            ->orderBy('updated_at', 'DESC')
-            ->get();
+
         $edit_phrase = Phrase::select('phrases.*', 'categories.id as category_id')
             ->leftJoin('phrase_categories', 'phrase_categories.phrase_id', '=', 'phrases.id')
             ->leftJoin('categories', 'phrase_categories.category_id', '=', 'categories.id')
@@ -101,13 +85,7 @@ class HomeController extends Controller
             array_push($include_categories, $phrase['category_id']);
         }
         
-        // dd($include_categories);
-        $categories = Category::select('categories.*')->where('user_id', '=', \Auth::id())
-        ->whereNull('deleted_at')
-        ->orderBy('updated_at', 'DESC')
-        ->get();
-        // dd($phrases);
-        return view('edit', compact('phrases', 'edit_phrase', 'include_categories', 'categories'));
+        return view('edit', compact('edit_phrase', 'include_categories'));
     }
 
 
@@ -149,15 +127,8 @@ class HomeController extends Controller
             ->where('phrases.user_id', '=', \Auth::id())
             ->where('phrases.id', '=', $id)
             ->whereNull('phrases.deleted_at')
-            ->get(); 
-            // dd($edit_phrase);
-
-        $categories = Category::where('user_id', '=', \Auth::id())
-            ->whereNull('deleted_at')
-            ->orderBy('updated_at', 'DESC')
             ->get();
-            // dd($categories);
-        return view('detail', compact('edit_phrase', 'categories'));
+        return view('detail', compact('edit_phrase'));
     }
 
     public function destroy(Request $request)
@@ -175,6 +146,19 @@ class HomeController extends Controller
         // Category::where('id', '=', $posts['category_id'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
         Category::where('id', $posts['category_id'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
         return back();
+    }
+
+    public function quiz()
+    {
+        return view('quiz');
+    }
+    public function group()
+    {
+        return view('group');
+    }
+    public function category()
+    {
+        return view('category');
     }
 
 }

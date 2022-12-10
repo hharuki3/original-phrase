@@ -82,15 +82,41 @@
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
-                            @yield('name')
+                            復習テスト
                         </div>
                         <div class="card-body">
-                            @yield('item')
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div>
+                                    <a href="/" class="btn btn-light">
+                                    <img width="30" src="{{asset('img/group.png')}}" alt="">
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="{{route('quiz')}}" class="btn btn-light">
+                                        <img width="30" src="{{asset('img/group.png')}}" alt="">
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="{{route('group')}}" class="btn btn-light">
+                                        <img width="30" src="{{asset('img/group.png')}}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-9">
+                                <a href="/category" class="btn btn-light">チェックから出題</a>
+                                <a href="/category" class="btn btn-light">ランダム10問出題</a>
+                                <buttom id="check">チェックから出題</buttom>
+                                <button id="random">ランダム10題出題</button>
+                                
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
                 
-
+                
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
