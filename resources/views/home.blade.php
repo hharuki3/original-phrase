@@ -19,7 +19,7 @@
     <div>
         <a href="{{route('quiz')}}" class="btn btn-light">
             <img width="30" src="{{asset('img/group.png')}}" alt="">
-            <span>復讐テスト</span>
+            <span>復習テスト</span>
         </a>
     </div>
     <div>

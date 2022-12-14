@@ -9,7 +9,6 @@
       setTimeout(() => {    
         // HTML内の「english」クラスを持つ要素を取得する
         const elements = document.querySelectorAll('.english');
-        console.log(elements);
         if(checkbox.checked){
             elements.forEach(element => element.style.display = 'none');
     

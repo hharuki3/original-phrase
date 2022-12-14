@@ -51,8 +51,8 @@ class AppServiceProvider extends ServiceProvider
                     ->get();
 
             }
-            $randoms = rand(0,count($phrases)-1);
-            
+            $randoms = range(0,count($phrases)-1);
+            shuffle($randoms);
             
             $categories = Category::where('user_id', '=', \Auth::id())
                 ->whereNull('deleted_at')
