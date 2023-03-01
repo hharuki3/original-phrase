@@ -21,6 +21,7 @@
             <img width="30" src="{{asset('img/group.png')}}" alt="">
             <span>復習テスト</span>
         </a>
+
     </div>
     <div>
         <a href="{{route('group')}}" class="btn btn-light">

@@ -4,11 +4,6 @@
     カテゴリー
 @endsection
 
-@section('javascript')
-<script src="/js/confirm.js"></script>
-<script src="/js/display.js"></script>
-@endsection
-
 
 @section('item')
 <div class="row">
@@ -64,6 +59,12 @@
     </div>
 @endforeach
 
+@endsection
+
+
+@section('javascript')
+<script src="{{ asset('/js/confirm.js') }}"></script>
+<script src="{{ asset('/js/display.js') }}"></script>
 @endsection
 
 

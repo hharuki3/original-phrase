@@ -18,6 +18,7 @@ class CreatePhrasesTable extends Migration
             $table->text('japanese');
             $table->text('phrase');
             $table->longText('memo');
+            $table->text('checklist')->nullable();
             // $table->string('user_name');
             $table->unsignedBigInteger('user_id');
             //deleted_atを自動生成

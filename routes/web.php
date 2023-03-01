@@ -24,10 +24,12 @@ Route::get('/create', [HomeController::class, 'create'])->name('create');
 Route::post('/store', [HomeController::class, 'store'])->name('store');
 Route::get('/edit/{id}', [HomeController::class, 'edit'])->name('edit');
 Route::post('/update', [HomeController::class, 'update'])->name('update');
+Route::post('/update_checklist', [HomeController::class, 'update_checklist'])->name('update_checklist');
 Route::get('/detail/{id}', [HomeController::class, 'detail'])->name('detail');
 Route::post('/destroy', [HomeController::class, 'destroy'])->name('destroy');
 Route::post('/category_destroy', [HomeController::class, 'category_destroy'])->name('category_destroy');
 Route::get('/quiz', [HomeController::class, 'quiz'])->name('quiz');
+Route::post('/result', [HomeController::class, 'result'])->name('result');
 Route::get('/category', [HomeController::class, 'category'])->name('category');
 Route::get('/group', [HomeController::class, 'group'])->name('group');
 

@@ -15,7 +15,7 @@
     <form action="{{route('update')}}" method="post">
         @csrf
         <input type="hidden" name="phrase_id" value="{{ $edit_phrase[0]['id'] }}">
-
+        <input type="hidden" name="checklist" value="">
         <div class="row">
             <div class="col-md-3">
                 <div class="card">

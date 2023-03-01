@@ -98,24 +98,41 @@ class HomeController extends Controller
                 ->update(['japanese' => $posts['japanese'], 'phrase' => $posts['phrase'], 'memo' => $posts['memo']]);
             PhraseCategory::where('phrase_id', '=', $posts['phrase_id'])->delete();
 
-            if($posts['categories']){
+            if(isset($posts['categories'])){
                 foreach($posts['categories'] as $category){
                     PhraseCategory::insert(['phrase_id' => $posts['phrase_id'], 'category_id' => $category]);
                 }
             }
-            $category_exists = Category::where('user_id', '=', \Auth::id())
-                ->where('name', '=', $posts['new_category'])
-                ->whereNull('deleted_at')
-                ->exists();
+
+            if(isset($posts['new_category'])){
+                $category_exists = Category::where('user_id', '=', \Auth::id())
+                    ->where('name', '=', $posts['new_category'])
+                    ->whereNull('deleted_at')
+                    ->exists();
+            }
                 // dd($category_exists);
             //emptyは0も空扱いになるため、厳密に書くのであれば「|| $posts['new_category']===0」も追加
-            if(!empty($posts['new_category'] && !$category_exists)){
+            if(!isset($category_exists) && isset($posts['new_category']) ){
                 $category_id = Category::insertGetId(['name' => $posts['new_category'], 'user_id' => \Auth::id()]);
                 PhraseCategory::insert(['phrase_id' => $posts['phrase_id'], 'category_id' => $category_id]);
             }
 
         });
         return redirect(route('home'));
+    }
+
+    public function update_checklist(Request $request)
+    {
+        $posts = $request->all();
+        // dd($posts);
+        DB::transaction(function() use($posts){
+            Phrase::where('id', '=', $posts['phrase_id'])
+                ->update(['japanese' => $posts['japanese'], 'phrase' => $posts['phrase'], 
+                'memo' => $posts['memo'], 'checklist' => $posts['checklist']]);
+            PhraseCategory::where('phrase_id', '=', $posts['phrase_id'])->delete();
+
+        });
+        return redirect(route('quiz'));
     }
 
 
@@ -150,8 +167,17 @@ class HomeController extends Controller
 
     public function quiz()
     {
+            // dd($edit_phrase);
         return view('quiz');
     }
+
+    public function result(Request $request)
+    {
+        $posts = $request->all();
+        // dd($posts);
+        return redirect(route('quiz'));
+    }
+
     public function group()
     {
         return view('group');

@@ -106,9 +106,7 @@
                             
                             <div class="col-md-9">
                                 <a href="/category" class="btn btn-light">チェックから出題</a>
-                                <a href="/category" class="btn btn-light">ランダム10問出題</a>
-                                <buttom id="check">チェックから出題</buttom>
-                                <button id="random">ランダム10題出題</button>
+                                <a href="{{route('quiz')}}" class="btn btn-light">ランダム10問出題</a>
                                 
                             </div>
                         </div>
