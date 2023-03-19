@@ -5,10 +5,9 @@
 
 <!-- ランダムだと同じ問題が複数回出題されてしまう。 
 もし全ての問題が出力されたら、終了の表示をさせる-->
-<h5 style="display:inline;"><a href="/home">戻る</a></h5>
-<div style="display:inline;" id="UnknowCheck">
-    
-</div>
+<h5 style="display:inline;" id="list"><a href="/home">一覧へ</a></h5>
+<div style="display:inline;" id="again"></div>
+
 
 <h5 style="display:inline;"><a href="javascript:;" onclick="Display_JS('answer')" id = "answer">答え</a></h5>
 
@@ -25,17 +24,20 @@
     </div>
 </div>
 
+
 <h5 style="display:inline;"><a href="javascript:;" onclick="Display_JS('Known')" id="Known">わかる</a></h5>
 <h5 style="display:inline;"><a href="javascript:;" onclick="Display_JS('UnKnown')" id="UnKnown">わからない</a></h5> 
-<div id="JS">
-    <p>上記「切り替え」をクリックすると、ここの内容が切り替わります。</p>
-</div>
-<div id="UnknowCheck">
-    <p>チェック</p>
-</div>
 
-<form action="{{route('quiz')}}" method="post">
-    <input type="hidden" name="UnknowCheck" id="UnknowCheck">
+
+
+<form method="post" action="{{route('update_checklist')}}"  id="checklist">
+    @csrf
+    <div type="hidden" name="agree" id="agree" value="checked" onchange="checkForm(this.form)"></div>
+    <input type="hidden" name="japanese" id="japanese_check">
+    <input type="hidden" name="phrase" id="phrase_check">
+    <input type="hidden" name="memo" id="memo_check">
+    <input type="hidden" name="phrase_id" id="phrase_id_check">
+    <input type="hidden" name="checklist" id="checklist_check">
 </form>
 
 <h5><a href="javascript:;" onclick="Display_JS('next')" id="next">次へ</a></h5> 
@@ -45,14 +47,15 @@
 @section('javascript')
 
 <script src="{{ asset('/js/questions.js') }}"></script>
-<!-- <script src="/js/questions.js"></script> -->
 
 <script>
+
     const param = @json($randoms);
     let num = 0;
-    console.log(param);
+    //console.log(param);
     let JSPhrases = @json($phrases);
     const next = document.querySelector('#next');
+
     next.addEventListener('click', () => {
         num = num + 1;
         console.log(param[num]);
@@ -60,40 +63,47 @@
             document.getElementById("japanese").innerHTML = `<p>${JSPhrases[param[num]]['japanese']}</p>`;
             document.getElementById("phrase").innerHTML = ``;
             document.getElementById("memo").innerHTML = ``;
+            
         } else {
-            document.getElementById("JS").innerHTML = "<p>終了です。</p>";
+            document.getElementById("answer").innerHTML = '';
+            document.getElementById("japanese").innerHTML = '';
+            document.getElementById("Known").innerHTML = '';
+            document.getElementById("UnKnown").innerHTML = '';
+            document.getElementById("next").innerHTML = '';
+            const again = document.getElementById('again')
+            const button = document.createElement('button');
+            button.textContent = 'もう一度';
+            button.addEventListener('click', function() {
+            window.location.href = 'quiz_all';
+            });
+            again.appendChild(button);
+            // document.body.appendChild(button); 
         }
         Eelements.forEach(element => element.style.display = 'none');
         Melements.forEach(element => element.style.display = 'none');
-        document.getElementById("UnknowCheck").innerHTML = '';
+        document.getElementById("agree").innerHTML = '';
 
     });
 
     function Display_JS(quiz){
         if(quiz == "answer" || quiz == "Known" || quiz == "UnKnown"){
-            document.getElementById("UnknowCheck").innerHTML = '<input type="checkbox" name="UnknowCheck" id="UnknowCheck">'
+
+            const checklist = `${JSPhrases[param[num]]['checklist']}`; 
+            console.log(checklist);
+            if(checklist =="checked"){
+                //すでにcheckされている状態にしておく。
+                document.getElementById("agree").innerHTML = '<input type="checkbox" name="agree" id="agree" value="checked"  onchange="checkForm(this.form)" checked>'
+                console.log("チェックされているよ。");
+            }
+            else{
+                document.getElementById("agree").innerHTML = '<input type="checkbox" name="agree" id="agree" value="checked"  onchange="checkForm(this.form)">'
+
+            }
             document.getElementById("japanese").innerHTML = `<p>${JSPhrases[param[num]]['japanese']}</p>`;
             document.getElementById("phrase").innerHTML = `<p>${JSPhrases[param[num]]['phrase']}</p>`;
-            document.getElementById("memo").innerHTML = `<p>${JSPhrases[[num]]['memo']}</p>`;
+            document.getElementById("memo").innerHTML = `<p>${JSPhrases[param[num]]['memo']}</p>`;
         };      
     };
-</script>
-
-</script>
-
-<form method="post" action="{{route('update_checklist')}}" onsubmit="return checkForm(this);" id="checklist">
-    @csrf
-    <input type="checkbox" name="agree" id="agree">
-    <input type="hidden" name="japanese" id="japanese_check">
-    <input type="hidden" name="phrase" id="phrase_check">
-    <input type="hidden" name="memo" id="memo_check">
-    <input type="hidden" name="phrase_id" id="phrase_id_check">
-    <input type="hidden" name="checklist" id="checklist_check">
-    <input type="submit" value="リストに追加">
-</form>
-
-
-<script>
 
     function checkForm(form) {
         const japanese = `${JSPhrases[param[num]]['japanese']}`;
@@ -105,14 +115,15 @@
         document.getElementById("phrase_check").value = phrase;
         document.getElementById("memo_check").value = memo;
         document.getElementById("phrase_id_check").value = phrase_id;
-
+        
         if (!form.agree.checked) {
             document.getElementById("checklist_check").value="";
-            return true;
-        }
+        }else{
             document.getElementById("checklist_check").value="checked";
-            // return true;
-            //こっち側しか適応されない。
+        }
+
+        form.submit();
+        return false;
 
     }
 </script>

@@ -93,7 +93,7 @@
                                     </a>
                                 </div>
                                 <div>
-                                    <a href="{{route('quiz')}}" class="btn btn-light">
+                                    <a href="{{route('quiz_all')}}" class="btn btn-light">
                                         <img width="30" src="{{asset('img/group.png')}}" alt="">
                                     </a>
                                 </div>
@@ -103,10 +103,9 @@
                                     </a>
                                 </div>
                             </div>
-                            
                             <div class="col-md-9">
-                                <a href="/category" class="btn btn-light">チェックから出題</a>
-                                <a href="{{route('quiz')}}" class="btn btn-light">ランダム10問出題</a>
+                                <a href="{{route('quiz_checked')}}" class="btn btn-light mb-3">チェックから出題</a></br>
+                                <a href="{{route('quiz_all')}}" class="btn btn-light">全て出題</a>
                                 
                             </div>
                         </div>

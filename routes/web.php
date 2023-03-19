@@ -28,7 +28,8 @@ Route::post('/update_checklist', [HomeController::class, 'update_checklist'])->n
 Route::get('/detail/{id}', [HomeController::class, 'detail'])->name('detail');
 Route::post('/destroy', [HomeController::class, 'destroy'])->name('destroy');
 Route::post('/category_destroy', [HomeController::class, 'category_destroy'])->name('category_destroy');
-Route::get('/quiz', [HomeController::class, 'quiz'])->name('quiz');
+Route::get('/quiz_all', [HomeController::class, 'quiz_all'])->name('quiz_all');
+Route::get('/quiz_checked', [HomeController::class, 'quiz_checked'])->name('quiz_checked');
 Route::post('/result', [HomeController::class, 'result'])->name('result');
 Route::get('/category', [HomeController::class, 'category'])->name('category');
 Route::get('/group', [HomeController::class, 'group'])->name('group');

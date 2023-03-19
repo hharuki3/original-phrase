@@ -66,6 +66,7 @@
             </div>
         </div>
     </form>
+    
     <form action="{{route('destroy')}}" method="post" style="display:inline-flex" id="delete">
         @csrf
         <input type="hidden" name="phrase_id" value="{{ $edit_phrase[0]['id'] }}" >

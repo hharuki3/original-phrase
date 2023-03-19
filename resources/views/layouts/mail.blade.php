@@ -75,9 +75,26 @@
                 </div>
             </div>
         </nav>
-        <main class="py-5">
-            @yield('content')
+
+        
+        <main class="py-4">
+            <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            @yield('content') 
+                            @yield('javascript')
+                        </div>
+                    </div>
+            </div>
         </main>
+        
     </div>
 </body>
 </html>
+
+
+
+
+
+
+

@@ -1,10 +1,11 @@
-function deleteHandle(event){
-    // dd('来てるよ');
+
+function deleteHandle(event, phraseId) {
+    console.log(phraseId);
     event.preventDefault();
-    if(window.confirm('本当に削除していいですか？')){
-        document.getElementById('delete-form').submit();
-    }else{
-        alert('キャンセルしました');
+    if (window.confirm('本当に削除していいですか？')) {
+
+        document.getElementById(`delete-form-${phraseId}`).submit();
+    } else {
+        alert('キャンセルしました。');
     }
 }
-

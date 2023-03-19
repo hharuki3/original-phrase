@@ -132,7 +132,13 @@ class HomeController extends Controller
             PhraseCategory::where('phrase_id', '=', $posts['phrase_id'])->delete();
 
         });
-        return redirect(route('quiz'));
+
+
+        $redirectUrl = session()->get('redirect_url',route('quiz_all'));
+        return redirect($redirectUrl);
+
+
+
     }
 
 
@@ -150,6 +156,7 @@ class HomeController extends Controller
 
     public function destroy(Request $request)
     {
+
         $posts = $request->all();
         // dd($posts);
         Phrase::where('id', $posts['phrase_id'])->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
@@ -165,17 +172,31 @@ class HomeController extends Controller
         return back();
     }
 
-    public function quiz()
+    public function quiz_all()
     {
             // dd($edit_phrase);
-        return view('quiz');
+        return view('quiz_all');
+    }
+    public function quiz_checked()
+    {
+        $phrase_checked = Phrase::select('phrases.*')
+        ->whereNull('deleted_at')
+        ->whereNotNull('checklist')
+        ->where('user_id', '=', \Auth::id())
+        ->orderBy('updated_at', 'DESC')
+        ->get();
+        if(!isset($phrase_checked)){
+            return view('quiz_checked');
+        }else{
+            return redirect('quiz_all');
+        }
     }
 
     public function result(Request $request)
     {
         $posts = $request->all();
         // dd($posts);
-        return redirect(route('quiz'));
+        return redirect(route('quiz_all'));
     }
 
     public function group()

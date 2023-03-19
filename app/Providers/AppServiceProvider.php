@@ -56,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
             shuffle($randoms);
             // dd($randoms);
 
+
             
             $categories = Category::where('user_id', '=', \Auth::id())
                 ->whereNull('deleted_at')
@@ -66,12 +67,25 @@ class AppServiceProvider extends ServiceProvider
                 ->whereNull('deleted_at')
                 ->exists();
             
+            $phrase_checked = Phrase::select('phrases.*')
+            ->whereNull('deleted_at')
+            ->whereNotNull('checklist')
+            ->where('user_id', '=', \Auth::id())
+            ->orderBy('updated_at', 'DESC')
+            ->get();
+
+            $randoms_checked =range(0,count($phrase_checked)-1);
+            shuffle($randoms_checked);
+
+            
             
 
             $view->with('phrases', $phrases)
                 ->with('categories', $categories)
                 ->with('phrase_exists', $phrase_exists)
-                ->with('randoms', $randoms);
+                ->with('randoms', $randoms)
+                ->with('phrase_checked', $phrase_checked)
+                ->with('randoms_checked', $randoms_checked);
 
         });
     }

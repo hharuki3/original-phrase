@@ -18,6 +18,7 @@
                                 <div>
                                     <input type="checkbox" name="categories[]" id="{{$category['id']}}" value="{{$category['id']}}">
                                     <label for="{{$category['id']}}">{{$category['name']}}</label>
+
                                 </div>
                                 @endforeach
                             </div>
@@ -25,6 +26,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">フレーズ</div>

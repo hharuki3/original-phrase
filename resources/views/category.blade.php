@@ -14,7 +14,7 @@
             </a>
         </div>
         <div>
-            <a href="{{route('quiz')}}" class="btn btn-light">
+            <a href="{{route('quiz_all')}}" class="btn btn-light">
                 <img width="30" src="{{asset('img/group.png')}}" alt="">
             </a>
         </div>
@@ -51,10 +51,11 @@
     <a href="detail/{{$phrase['id']}}" class="btn btn-light">詳細</a>
     <a href="edit/{{$phrase['id']}}" class="btn btn-light">編集</a>
     <div style="display:inline-flex">
-        <form action="{{route('destroy')}}" method="post" id="delete-form">
+
+        <form action="{{route('destroy')}}" method="post"  id="delete-form-{{$phrase['id']}}">
             @csrf
             <input type="hidden" name="phrase_id" value="{{ $phrase['id'] }}" >
-            <button type="submit" class="btn btn-light" onclick="deleteHandle(event);">削除</button>
+            <button type="submit" class="btn btn-light"  onclick="deleteHandle(event,{{ $phrase['id'] }} )">削除</button>
         </form>
     </div>
 @endforeach

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6 py-5">
             <div class="card">
                 <div class="card-header">{{ __('ログイン') }}</div>
 
@@ -24,6 +24,7 @@
                                 @enderror
                             </div>
                         </div> -->
+
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('ユーザID') }}</label>
 
