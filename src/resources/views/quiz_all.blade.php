@@ -5,10 +5,10 @@
 
 <!-- ランダムだと同じ問題が複数回出題されてしまう。 
 もし全ての問題が出力されたら、終了の表示をさせる-->
+
 <h5 style="display:inline;" id="list"><a href="/home">一覧へ</a></h5>
+<p style="display:inline;">全て出題</p>
 <div style="display:inline;" id="again"></div>
-
-
 <h5 style="display:inline;"><a href="javascript:;" onclick="Display_JS('answer')" id = "answer">答え</a></h5>
 
 

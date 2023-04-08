@@ -151,7 +151,13 @@ class HomeController extends Controller
             ->where('phrases.id', '=', $id)
             ->whereNull('phrases.deleted_at')
             ->get();
-        return view('detail', compact('edit_phrase'));
+
+            $include_categories = [];
+            foreach($edit_phrase as $phrase){
+                array_push($include_categories, $phrase['category_id']);
+            }
+            
+        return view('detail', compact('edit_phrase', 'include_categories'));
     }
 
     public function destroy(Request $request)

@@ -79,7 +79,7 @@
         
         <main class="py-4">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 mx-5">
                     <div class="card">
                         <div class="card-header">
                             復習テスト
@@ -88,24 +88,24 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <div>
-                                    <a href="/" class="btn btn-light">
-                                    <img width="30" src="{{asset('img/group.png')}}" alt="">
+                                    <a href="/" class="btn btn-light my-2">
+                                    <img width="30" src="{{asset('img/home.png')}}" alt="">
                                     </a>
                                 </div>
                                 <div>
-                                    <a href="{{route('quiz_all')}}" class="btn btn-light">
-                                        <img width="30" src="{{asset('img/group.png')}}" alt="">
+                                    <a href="{{route('quiz_all')}}" class="btn btn-light my-2">
+                                        <img width="30" src="{{asset('img/quiz.png')}}" alt="">
                                     </a>
                                 </div>
                                 <div>
-                                    <a href="{{route('group')}}" class="btn btn-light">
-                                        <img width="30" src="{{asset('img/group.png')}}" alt="">
+                                    <a href="{{route('group')}}" class="btn btn-light my-2">
+                                        <img width="30" src="{{asset('img/groups.png')}}" alt="">
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-9">
-                                <a href="{{route('quiz_checked')}}" class="btn btn-light mb-3">チェックから出題</a></br>
-                                <a href="{{route('quiz_all')}}" class="btn btn-light">全て出題</a>
+                            <div class="col-md-9 px-5">
+                                <a href="{{route('quiz_checked')}}" class="btn btn-light my-2">チェックから出題</a></br>
+                                <a href="{{route('quiz_all')}}" class="btn btn-light my-2">全て出題</a>
                                 
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                 </div>
                 
                 
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-body">
                             @yield('content') 

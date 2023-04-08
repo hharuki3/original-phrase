@@ -79,7 +79,7 @@
         
         <main class="py-4">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 mx-5">
                     <div class="card">
                         <div class="card-header">
                             @yield('name')
@@ -91,7 +91,7 @@
                 </div>
                 
 
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-body">
                             @yield('content') 
